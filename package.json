@@ -1,8 +1,8 @@
 {
   "name": "eip-712-types-generation",
-  "version": "0.1.1",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "version": "0.1.2",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "Nick Reynolds",
   "license": "MIT",
   "private": false,

@@ -1,5 +1,5 @@
 import { canonicalize } from "json-canonicalize";
-import getEthTypesFromSchema from "./getEthTypesFromInputDoc";
+import { getEthTypesFromInputDoc } from "./getEthTypesFromInputDoc";
 
 // Examples specified here: https://w3c-ccg.github.io/ethereum-eip712-signature-2021-spec/#ref-for-dfn-types-generation-algorithm-2
 const specExampleInputDoc = {
@@ -186,18 +186,18 @@ const socialMediaProfileLinkageTypes = {
 
 describe("getEthTypesFromSchemas tests", () => {
     test("test spec example", () => {
-        const res = getEthTypesFromSchema(specExampleInputDoc);
+        const res = getEthTypesFromInputDoc(specExampleInputDoc);
         const objRes = JSON.parse(canonicalize(res));
         expect(objRes).toEqual(specExampleTypes);
     });
 
     test("test SocialMediaProfileLinkage example", () => {
-        const res = getEthTypesFromSchema(socialMediaProfileLinkage, "VerifiableCredential");
+        const res = getEthTypesFromInputDoc(socialMediaProfileLinkage, "VerifiableCredential");
         const parsedCanonicalized = JSON.parse(canonicalize(res));
         expect(canonicalize(parsedCanonicalized)).toEqual(canonicalize(socialMediaProfileLinkageTypes));
     })
     
     test("spec example without proof should fail", () => {
-        expect(() => getEthTypesFromSchema(specExamplenIputDocWithoutProof, "VerifiableCredential")).toThrow();        
+        expect(() => getEthTypesFromInputDoc(specExamplenIputDocWithoutProof, "VerifiableCredential")).toThrow();        
     })
 })

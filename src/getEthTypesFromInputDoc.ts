@@ -5,7 +5,7 @@ interface TypedDataField {
     type: string;
 }
 
-export default function getEthTypesFromInputDoc(input: object, primaryType: string = "Document"): object {
+export function getEthTypesFromInputDoc(input: object, primaryType: string = "Document"): object {
     const res = getEthTypesFromInputDocHelper(input, primaryType);
     if (!res.has("Proof")) {
         throw new Error("No proof was found on input document");
