@@ -1,1 +1,1 @@
-export * from "./getEthTypesFromSchema";
+export * from "./getEthTypesFromInputDoc";
