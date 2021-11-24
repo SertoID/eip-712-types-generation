@@ -4,7 +4,7 @@ This package serves to generate a Types object compatible with EIP-712 ( https:/
 
 ## Usage
 
-Import `getEthTypesFromSchema` into your project and pass in the `message` that you intend to sign using EIP-712, including the `proof` object. This will return an object that can be used as the `types` object passed into `eth_signTypedDatav4`
+Import `getEthTypesFromInputDoc` into your project and pass in the `message` that you intend to sign using EIP-712, including the `proof` object. This will return an object that can be used as the `types` object passed into `eth_signTypedDatav4`
 
 ## Developing
 

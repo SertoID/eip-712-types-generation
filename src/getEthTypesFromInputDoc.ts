@@ -10,11 +10,6 @@ export function getEthTypesFromInputDoc(input: object, primaryType: string = "Do
     if (!res.has("Proof")) {
         throw new Error("No proof was found on input document");
     }
-    res.set("EIP712Domain", [
-        { name: "name", type: "string" },
-        { name: "version", type: "string" },
-        { name: "chainId", type: "uint256" },
-    ]);
     let obj = Object.fromEntries(res);
     obj = { 
         "EIP712Domain": [
