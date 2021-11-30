@@ -17,34 +17,30 @@ export function getEthTypesFromInputDoc(input: object, primaryType: string = "Do
             { name: "version", type: "string" },
             { name: "chainId", type: "uint256" },
         ],
-        ...obj};
+        ...obj
+    };
     return obj;
 }
 
 // Given an Input Document, generate Types according to type generation algorithm specified in EIP-712 spec:
 // https://w3c-ccg.github.io/ethereum-eip712-signature-2021-spec/#ref-for-dfn-types-generation-algorithm-2
 function getEthTypesFromInputDocHelper(input: object, primaryType: string): Map<string, TypedDataField[]> {
-    
-    
     const output = new Map<string, TypedDataField[]>();
     const types = new Array<TypedDataField>();
 
     let canonicalizedInput = JSON.parse(canonicalize(input));
 
     for (const property in canonicalizedInput) {
-        // console.log("property: ", property);
         const val = canonicalizedInput[property];
         const type = typeof val;
-        // console.log("typeof canonicalizedInput[property]: ", type);
         if (type === "boolean") {
             types.push({ name: property, type: "bool" })
-        } else if (type === "number") {
+        } else if (type === "number" || type === "bigint") {
             types.push({ name: property, type: "uint256" })
         } else if (type === "string") {
             types.push({ name: property, type: "string" })
         } else if (type === "object") {
             if (Array.isArray(val)) {
-                console.log("is Array.");
                 if (val.length === 0) {
                     throw new Error("Array with length 0 found")
                 } else {
@@ -67,14 +63,12 @@ function getEthTypesFromInputDocHelper(input: object, primaryType: string): Map<
                     }
                 }
             } else {
-                console.log("is Not Array.");
                 const recursiveOutput = getEthTypesFromInputDocHelper(val, primaryType);
                 const recursiveTypes = recursiveOutput.get(primaryType);
                 const propertyType = property.charAt(0).toUpperCase() + property.substring(1);
                 types.push({ name: property, type: propertyType });
                 output.set(propertyType, recursiveTypes!);
                 for (const key in recursiveOutput) {
-                    console.log("recursiveOutput key: ", key);
                     if (key !== primaryType) {
                         output.set(key, recursiveOutput.get(key)!)
                     }
